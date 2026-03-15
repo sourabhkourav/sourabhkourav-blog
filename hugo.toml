@@ -21,11 +21,15 @@ theme = "PaperMod"
 
 [[params.socialIcons]]
   name = "github"
-  url = "https://github.com/yourhandle"
+  url = "https://github.com/sourabhkourav"
 
 [[params.socialIcons]]
   name = "linkedin"
-  url = "https://linkedin.com/in/yourhandle"
+  url = "https://linkedin.com/in/sourabhkourav"
+
+[[params.socialIcons]]
+  name = "twitter"
+  url = "https://x.com/iSourabhKourav"
 
 [menu]
   [[menu.main]]
