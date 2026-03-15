@@ -2,7 +2,8 @@ baseURL = "https://sourabhkourav.pages.dev/"
 languageCode = "en-us"
 title = "Sourabh Kourav"
 theme = "PaperMod"
-paginate = 5
+[pagination]
+  pagerSize = 5
 
 [params]
   author = "Sourabh Kourav"
