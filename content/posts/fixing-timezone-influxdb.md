@@ -1,6 +1,6 @@
 ---
 title: "Fixing Timezone Issues in InfluxDB for IoT Time-Series Data"
-date: 2026-03-15
+date: 2026-03-22
 draft: false
 description: "All things I did for fixing timezone issue"
 tags: ["timezone", "influxdb"]
