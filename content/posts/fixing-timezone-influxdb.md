@@ -81,7 +81,7 @@ After both fixes:
 
 **Key Takeaways**
 
-- InfluxDB defaults to UTC for all windowing operations — always account for this when serving users in non-UTC timezones.
+- InfluxDB defaults to UTC for all windowing operations - always account for this when serving users in non-UTC timezones.
 - The `timeSrc` parameter in `window()` controls whether bucket labels use start or end timestamps. Default is `_stop`; switch to `"_start"` to avoid off-by-one-day labeling.
 - Use `import "timezone"` with `timezone.location()` to align InfluxDB's day boundaries with your users' local timezone.
 - Pass timezone dynamically from the client rather than hardcoding it, so the solution scales across regions.
