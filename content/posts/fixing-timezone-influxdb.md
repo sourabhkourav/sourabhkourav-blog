@@ -10,23 +10,23 @@ tags: ["timezone", "influxdb"]
 
 ## **Introduction**
 
-If you're building a platform that displays time-series data to users across different timezones, you've probably run into subtle but frustrating display bugs — data appearing on the wrong day, graphs shifting after a certain hour, or timestamps being off by hours. We hit exactly these issues on our IoT device management platform, where devices send data to InfluxDB at regular intervals. Here's what went wrong and how I fixed it.
+If you're building a platform that displays time-series data to users across different timezones, you've probably run into subtle but frustrating display bugs which was data appearing on the wrong day, graphs shifting after a certain hour, or timestamps being off by hours. We hit exactly these issues on our IoT device management platform, where devices send data to InfluxDB at regular intervals. Here's what went wrong and how I fixed it.
 
 ## **The Setup**
 
-We run a platform that manages IoT devices. Each device sends telemetry data to a server at regular intervals, and we store it in InfluxDB — a natural fit for time-series data. Our users are in IST (Indian Standard Time, UTC+5:30), so all graphs and dashboards are expected to display data aligned to IST days.
+We run a platform that manages IoT devices. Each device sends telemetry data to a server at regular intervals, and we store it in InfluxDB which is a natural fit for time-series data. Our users are in IST (Indian Standard Time, UTC+5:30), so all graphs and dashboards are expected to display data aligned to IST days.
 
 ## **The Problems**
 
 We noticed two distinct issues in our UI:
 
-### **Problem 1 — Timestamps showing one day ahead**
+### **Problem 1 - Timestamps showing one day ahead**
 
 When querying daily aggregated data, the timestamp returned for a given day's bucket was showing the *next* day's date. For example, data for March 5th was being labeled as March 6th.
 
-### **Problem 2 — Daily graphs only populating after 6:30 PM**
+### **Problem 2 - Daily graphs only populating after 6:30 PM**
 
-On the UI, a new day's graph start receiving data from 6:30 PM IST — instead of at IST midnight (00:00).
+On the UI, a new day's graph start receiving data from 6:30 PM IST - instead of at IST midnight (00:00).
 
 ## **The Root Cause: InfluxDB Defaults to UTC**
 
@@ -35,7 +35,7 @@ Both issues stem from the same underlying behaviour: **InfluxDB uses UTC as its 
 When you use `window(every: 1d)` in a Flux query, InfluxDB splits the data into daily buckets starting at **UTC 00:00**. Since IST is UTC+5:30, IST midnight actually corresponds to **18:30 UTC the previous day**. This means:
 
 - InfluxDB's "day boundary" is 5 hours 30 minutes off from what our users expect.
-- Data that falls between 18:30 UTC and 23:59 UTC — which is 00:00 to 05:29 IST — gets bucketed into the *next* UTC day.
+- Data that falls between 18:30 UTC and 23:59 UTC, which is 00:00 to 05:29 IST which gets bucketed into the *next* UTC day.
 
 This explained why graphs only showed data after 6:30 PM IST (when the UTC day "caught up" to IST) and why timestamps were shifted forward.
 
@@ -47,7 +47,7 @@ The second contributing factor is the `timeSrc` parameter in the `window()` func
 
 Two targeted changes resolved both issues:
 
-**Fix 1 — Use `timeSrc: v._start` in the window function**
+**Fix 1 - Use `timeSrc: v._start` in the window function**
 
 Changing `timeSrc` to `v._start` ensures each bucket is labeled with its *start* timestamp instead of its end, so data for March 5th is correctly labeled as March 5th.
 
@@ -55,7 +55,7 @@ Changing `timeSrc` to `v._start` ensures each bucket is labeled with its *start*
 window(every: 1d, timeSrc: "_start")
 ```
 
-**Fix 2 — Pass the client's timezone to InfluxDB**
+**Fix 2 - Pass the client's timezone to InfluxDB**
 
 Using InfluxDB's `timezone` package, we set the query timezone dynamically based on the client's locale. For IST:
 
@@ -66,7 +66,7 @@ option location = timezone.location(name: "Asia/Kolkata")
 
 This tells InfluxDB to split days at **IST midnight (18:30 UTC)** instead of UTC midnight, so each day's bucket correctly covers 00:00–23:59 IST.
 
-On the backend, we pass the timezone name dynamically from the client system so the query always reflects the user's local timezone — not a hardcoded one.
+On the backend, we pass the timezone name dynamically from the client system so the query always reflects the user's local timezone, not a hardcoded one.
 
 ---
 
