@@ -5,12 +5,15 @@ theme = "PaperMod"
 [pagination]
   pagerSize = 5
 
+[services]
+  [services.googleAnalytics]
+    ID = "G-D24PW47BG1"
+
 [params]
   author = "Sourabh Kourav"
   description = "Tech, Life & Finance - by Sourabh Kourav"
   defaultTheme = "auto"
   env = "production"
-  googleAnalytics = "G-D24PW47BG1"
   ShowReadingTime = true
   ShowShareButtons = true
   ShowPostNavLinks = true
