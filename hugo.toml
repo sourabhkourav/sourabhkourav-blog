@@ -7,8 +7,9 @@ theme = "PaperMod"
 
 [params]
   author = "Sourabh Kourav"
-  description = "Tech, Life & Finance — by Sourabh Kourav"
+  description = "Tech, Life & Finance - by Sourabh Kourav"
   defaultTheme = "auto"
+  env = "production"
   ShowReadingTime = true
   ShowShareButtons = true
   ShowPostNavLinks = true

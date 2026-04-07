@@ -4,7 +4,7 @@
 <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>Hugo Blog - Quick Command Reference | Sourabh Kourav</title>
 <meta name="keywords" content="hugo, reference">
 <meta name="description" content="All commands I use to manage this blog">
@@ -70,6 +70,75 @@
         document.querySelector("html").dataset.theme = 'light';
     }
 
+</script><meta property="og:url" content="http://localhost:1313/posts/my-second-post/">
+  <meta property="og:site_name" content="Sourabh Kourav">
+  <meta property="og:title" content="Hugo Blog - Quick Command Reference">
+  <meta property="og:description" content="All commands I use to manage this blog">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-03-15T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-03-15T00:00:00+00:00">
+    <meta property="article:tag" content="Hugo">
+    <meta property="article:tag" content="Reference">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Hugo Blog - Quick Command Reference">
+  <meta name="twitter:description" content="All commands I use to manage this blog">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Hugo Blog - Quick Command Reference",
+      "item": "http://localhost:1313/posts/my-second-post/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Hugo Blog - Quick Command Reference",
+  "name": "Hugo Blog - Quick Command Reference",
+  "description": "All commands I use to manage this blog",
+  "keywords": [
+    "hugo", "reference"
+  ],
+  "articleBody": "🚀 One-Time Setup # Create new Hugo site hugo new site sourabhkourav cd D:\\dev\\hugo-blog\\sourabhkourav # Initialize Git git init # Add PaperMod theme git submodule add https://github.com/adityatelange/hugo-PaperMod themes/PaperMod # Connect to GitHub git remote add origin https://github.com/sourabhkourav/sourabhkourav-blog.git git branch -M main git push -u origin main 📝 Creating a New Post # Step 1 — Create post file hugo new posts/my-post-title.md # Step 2 — Open and edit the file # content/posts/my-post-title.md Post front matter template:\n--- title: \"Your Post Title\" date: 2026-03-15 draft: false description: \"Short description for SEO\" tags: [\"tech\", \"coding\"] categories: [\"Tech\"] cover: image: \"/images/cover.jpg\" alt: \"cover image\" --- Your content here... 📄 Creating a New Page (with Menu) # Step 1 — Create page file hugo new contact.md hugo new uses.md hugo new now.md Step 2 — Open hugo.toml and add to menu:\n[[menu.main]] name = \"Contact\" url = \"/contact/\" weight = 3 [[menu.main]] name = \"Uses\" url = \"/uses/\" weight = 4 Step 3 — Push to deploy:\ngit add . git commit -m \"add contact page\" git push ✏️ Draft → Preview → Publish Workflow # Step 1 — Create post (draft: true by default) hugo new posts/my-post-title.md # Step 2 — Preview draft locally hugo server -D # Open http://localhost:1313 to see draft # Step 3 — When happy, open the .md file # Change draft: true → draft: false # Step 4 — Preview again without drafts # (exactly like live site) hugo server # Step 5 — Publish git add . git commit -m \"publish: my post title\" git push 📅 Schedule a Future Post # Step 1 — Create post with a future date hugo new posts/my-future-post.md Set a future date in front matter:\n--- title: \"My Future Post\" date: 2026-04-01 draft: false --- # Step 2 — Preview future posts locally hugo server -D -F # Note: Cloudflare will only show it # after the date passes automatically 🚢 Daily Publish Workflow # Stage all changes git add . # Commit with message git commit -m \"new post: your post title\" # Push to GitHub (auto-deploys to Cloudflare in ~30 sec) git push 🖼️ Images # Step 1 — Put image in static/images/ folder # Example: static/images/my-photo.jpg # Step 2 — Use in post content ![Alt text](/images/my-photo.jpg) # Step 3 — Use as cover image (in front matter) cover: image: \"/images/my-photo.jpg\" alt: \"description of image\" caption: \"optional caption\" relative: false ⚙️ hugo.toml Common Changes # Change site title title = \"Sourabh Kourav\" # Change description description = \"Tech, Life \u0026 Finance — by Sourabh Kourav\" # Add new menu item [[menu.main]] name = \"Contact\" url = \"/contact/\" weight = 3 # Toggle features ShowReadingTime = true ShowShareButtons = true ShowCodeCopyButtons = true ShowBreadCrumbs = true # Add Google Analytics [services] [services.googleAnalytics] id = \"G-XXXXXXXXXX\" # Update base URL when domain is bought baseURL = \"https://sourabhkourav.dev/\" 🏷️ Tags \u0026 Categories # Add to post front matter tags: [\"python\", \"tutorial\"] categories: [\"Tech\"] # Auto-generates pages at: # sourabhkourav.pages.dev/tags/python # sourabhkourav.pages.dev/categories/tech 🔄 Update Theme # Update PaperMod to latest version git submodule update --remote themes/PaperMod git add . git commit -m \"update PaperMod theme\" git push 🗑️ Delete a Post or Page # Simply delete the .md file del content\\posts\\my-post.md # Then push git add . git commit -m \"remove post: title\" git push 📋 Git Reference # Check status of changed files git status # See commit history git log --oneline # Undo last commit (keeps changes) git reset --soft HEAD~1 # Pull latest from GitHub git pull 📁 Folder Structure sourabhkourav/ ├── content/ │ ├── posts/ ← blog posts │ └── about.md ← standalone pages ├── static/ │ └── images/ ← all images go here ├── themes/ │ └── PaperMod/ ← never edit this! └── hugo.toml ← site config 🔗 Important Links What URL Live Blog https://sourabhkourav.pages.dev GitHub Repo https://github.com/sourabhkourav/sourabhkourav-blog Local Preview http://localhost:1313 Cloudflare Dashboard https://dash.cloudflare.com Hugo Themes https://themes.gohugo.io PaperMod Docs https://github.com/adityatelange/hugo-PaperMod/wiki ⚠️ Important Rules Never edit anything inside themes/ folder Always set draft: false before publishing Images always go in static/images/ folder Run hugo server -D to preview before pushing When you buy sourabhkourav.dev update baseURL in hugo.toml ",
+  "wordCount" : "689",
+  "inLanguage": "en",
+  "datePublished": "2026-03-15T00:00:00Z",
+  "dateModified": "2026-03-15T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Sourabh Kourav"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/my-second-post/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Sourabh Kourav",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
 </script>
 </head>
 <body id="top">
